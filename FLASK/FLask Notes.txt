@@ -1,0 +1,195 @@
+
+First Flask Application (Hello_world.py)
+
+1>Flask(__name__) creates a Flask application instance using the current module.
+2>The return statement sends the HTTP response back to the client.
+3>By default, the app runs on http://127.0.0.1:5000.
+4>@app.route() is a decorator that maps a URL to a specific function.
+5>The run() method executes the Flask application and starts the server.
+6>debug=True allows live code reloading without restarting the server and shows detailed error messages.
+___________________________________________________________________________________________
+Data Types Passing in url (Data_types.py)
+
+1>to pass data types in url we have to follow below syntax
+    -->app.route('/<Datatype:Name>')
+    -->Then you can call the Name in function.
+    -->String is the only data type which do not need to mentioned its data type
+    -->We have different data types here like int,float,byte,etc...
+    --> syntax to declare it in app.route("/int:variable")
+    -->want to declare more data types in it then syntax is: app.route("/int:variable")
+2>The return statement uses .format() to insert variables into the string response dynamically.
+3>redirect and url_for are imported from Flask to handle redirections and URL building.
+
+___________________________________________________________________________________________
+Building the URL dynammically (dynammically_url.py)
+
+1> redirect and url_for are imported from Flask to handle redirections and URL building.
+2> @app.route('/<guest>') handles string parameters in the URL.
+3> The guest1() function dynamically displays the guest's name passed through the URL.
+4> @app.route('/user/<name>') handles user-based redirection.
+5> If the name parameter is 'admin', the user is redirected to the /admin route.
+6> If the name parameter is not 'admin', the user is redirected to the /guest route with the provided name.
+7> url_for() dynamically builds the URL for the given function name.
+
+___________________________________________________________________________________________
+
+Different Https Methods in Flask (Https.py,Form.html)
+
+1> redirect, url_for, and request are imported from Flask to handle redirections, URL building, and form data retrieval.
+2> @app.route('/login', methods=['POST', 'GET']) allows both POST and GET requests for the /login route.
+3> In the POST method, request.form['nm'] retrieves the form data from the submitted HTML form.
+4> In the GET method, request.args.get('nm') retrieves the query parameter from the URL.
+5> The login() function redirects the user to the /welcome/<guest> route using url_for() with the form data.
+6> form.html contains an HTML form that sends data to /login using the POST method.
+7> The form action is set to http://localhost:5000/login, which submits the form data to the Flask server.
+8> <input type="text" name="nm"> allows the user to enter their name, which is passed to the server.
+9> <input type="submit" value="submit"> creates a submit button for sending the form data.
+
+___________________________________________________________________________________________
+Template in Flask (Template.py)
+
+1> render_template is imported from Flask to render HTML templates.
+2> @app.route('/a') returns HTML content directly using a string with HTML tags.
+3> The index1() function returns an HTML string containing <h1>Hello</h1>.
+4> @app.route('/') uses render_template() to render the hello.html file.
+5> render_template() dynamically loads and displays the HTML file from the templates folder.
+6> The templates folder is the default location for storing HTML files in Flask.
+___________________________________________________________________________________________
+Static Files in Flask (Static.py,index.html,hello.js)
+
+1> render_template is imported from Flask to render HTML templates.
+2> @app.route('/') serves the index.html file using render_template().
+3> The index.html file links to an external JavaScript file (hello.js) using:
+    <script src="{{ url_for('static', filename='hello.js') }}">
+
+4> url_for('static', filename='hello.js') dynamically builds the URL for the static JavaScript file.
+5> Flask uses a static folder by convention to store static files (CSS, JS, images, etc.).
+6> The hello.js file contains a sayHello() function that displays an alert with the message "Hello world".
+
+7> The HTML button triggers the sayHello() function when clicked using:
+    <input type="button" onclick="sayHello()" value="Say Hello"/>
+___________________________________________________________________________________________
+Flask Framework Request from Object(student.html,result.html,Request_object.py)
+
+1> render_template and request are imported from Flask to render HTML templates and handle form data.
+2> @app.route('/') serves the student.html form using render_template().
+3> The student.html file contains a form with fields for Name, IOT, CD, and MPMC scores.
+4> The form action sends data to http://localhost:5000/result using the POST method.
+5> @app.route('/result', methods=['POST', 'GET']) handles both POST and GET requests.
+6> request.form retrieves the form data submitted by the user.
+
+7> The form data is passed to the result.html template using:
+return render_template("result.html", result=result)
+
+8> The result.html template displays the form data in a table using a Jinja2 for loop:
+{% for key, value in result.items() %}
+
+9> The table uses {{ key }} and {{ value }} to dynamically display the form field names and values.
+___________________________________________________________________________________________
+Cookies in Flask Application(cookie.py,setcookie.html,readcookie.html)
+
+1> render_template, request, and make_response are imported from Flask to render HTML templates, handle form data, and create HTTP responses.
+2> timedelta is imported from datetime to set the cookie expiration time.
+3> @app.route('/') serves the setcookie.html form using render_template().
+4> setcookie.html contains a form that sends the user ID to /setcookie using the POST method.
+5> @app.route('/setcookie', methods=['POST', 'GET']) handles POST and GET requests for setting cookies.
+6> make_response() creates an HTTP response to send the cookie along with the rendered readcookie.html template.
+7> resp.set_cookie('userID', user, max_age=timedelta(days=30)) creates a cookie named userID with the form value and sets its expiration to 30 days.
+8> @app.route('/getcookie') retrieves the cookie value using:
+    name = request.cookies.get('userID')
+9> The /getcookie route displays the user ID stored in the cookie using:
+    <h1>Welcome {name}</h1>
+10> readcookie.html contains a link to /getcookie to read the stored cookie.
+___________________________________________________________________________________________
+Flask Redirects and Errors (redirect.py,login.html)
+
+1> redirect, url_for, render_template, and request are imported from Flask to handle redirections, form data, and template rendering.
+2> @app.route('/') serves the login.html form using render_template().
+3> login.html contains a form that sends the user ID to /login using the POST method.
+4> @app.route('/login', methods=['POST', 'GET']) handles both POST and GET requests.
+5> If the username is 'admin', the user is redirected to the /success route.
+6> If the username is incorrect, the user is redirected back to the / route.
+7> url_for('success') dynamically builds the URL for the /success route.
+8> @app.route('/success') displays a success message with the text:
+    <h1>Logged in successfully!</h1>
+9> The form action uses {{ url_for('login') }} to dynamically generate the URL for the /login route.
+___________________________________________________________________________________________
+Flask Redirects and Errors (abort.py)
+
+1> redirect, url_for, render_template, request, and abort are imported from Flask to handle redirections, form data, and aborting requests.
+2> @app.route('/') serves the login.html form using render_template().
+3> @app.route('/login', methods=['POST', 'GET']) handles both POST and GET requests.
+4> If the form is submitted using the POST method and the username is 'admin':
+    The user is redirected to the /success route.
+
+5> If the username is incorrect, abort(401) returns a 401 Unauthorized error.
+6> If the request method is GET, the user is redirected back to the / route.
+7> @app.route('/success') displays a success message with the text:
+    <h1>Logged in successfully!</h1>
+___________________________________________________________________________________________
+Mail extension (mail.py)
+1> Mail(app) initializes the Flask-Mail extension with the app.
+2> Mail configuration is done using app.config:
+	MAIL_SERVER = 'smtp.gamil.com' → ❌ (Typo: should be 'smtp.gmail.com')
+	MAIL_PORT = 465 → used for SSL-secured email sending.
+	MAIL_USERNAME = 'abc@gamil.com' → sender’s email ID.
+	MAIL_PASSWORD = '123' → password or app password for the email.
+	MAIL_USE_TLC = False → ❌ (Typo: should be MAIL_USE_TLS)
+	MAIL_USE_SSL = True → enables SSL encryption for secure connection.
+3> mail = Mail(app) reinitializes the mail object after setting configurations.
+4> A route / is defined using @app.route("/").
+5> Inside the index() function:
+6>Message object is created with:
+	Subject: "hello
+	Sender: 'xyz@gmail.com'
+	Recipients: ['abc@gmail.com']
+	msg.body = "hello flask!" sets the plain text body of the message.
+	mail.send(msg) sends the email.
+7> "message sent" is returned as the response when the email is successfully sent
+____________________________________________________________________________________________
+WTF Extension in FLask (wtf.py,wtf_main.py,contact.html)
+
+
+1> FlaskForm is imported from flask_wtf and used to create a form class named ContactForm.
+2> Various form field types are imported from wtforms, such as StringField, IntegerField, RadioField, TextAreaField, SelectField, and SubmitField.
+3> Validators like DataRequired and Email are used to enforce input requirements on specific fields.
+4> In ContactForm, fields like name, gender, address, email, age, and language are defined with appropriate labels and validators.
+5> The Flask app is defined in wtf_main.py, and the secret_key is set for:
+CSRF protection (automatically included in forms via {{ form.hidden_tag() }})
+Flashing messages using flash()
+6> The /contact route handles both GET and POST methods.
+7> If the method is GET, an empty form is rendered using render_template("contact.html", form=form).
+8> If the method is POST, the form is validated using form.validate().
+9> If the form is not valid, a flash message is displayed, and the user is returned to the same form page with error messages.
+10> If the form is valid, the user is redirected to the success.html page.
+11> The contact.html template uses Jinja2 to render form fields and show error messages.
+12> {{ form.hidden_tag() }} includes the CSRF token for security (enabled because of the secret_key).
+13> {{ form.name.label }} and {{ form.name }} render the label and input for the name field, and similar for other fields.
+14> Flash messages are retrieved and displayed using {% with messages = get_flashed_messages() %} block.
+15> Error messages for individual fields are shown using {% for message in form.field.errors %} blocks.
+
+_______________________________________________________________________________________________________
+dATABASE CRUD OPERATION flask(Database.py,index11.py)
+
+1>The sqlite3 module is used to create and manage a local SQLite database named users.db.
+2>A helper function init_db() is defined to initialize the database:
+	->It connects to the database file.
+	->Creates a table users if it doesn't exist, with fields id, name, and email.
+	->Commits the changes and closes the connection.
+3>The / route (home page) fetches all users from the users table and renders them using the index11.html template.
+4>The HTML page receives the user list using render_template('index11.html', users=users) and uses Jinja2 syntax to loop through them.
+5>The /add route is defined with methods=['POST'] to handle form submissions for adding a new user.
+6>The add_user() function:
+	->Reads form data name and email using request.form.
+	->Inserts the new user into the database using an SQL INSERT query.
+	->Commits the change and redirects to the home page using redirect(url_for('index')).
+7>The /update/<int:user_id> route handles updating user details with a POST request.
+8>The update_user() function:
+	->Accepts the user’s ID from the URL.
+	->Reads new_name and new_email from the submitted form.
+	->Updates the corresponding user record in the DB using an SQL UPDATE query.
+9>The /delete/<int:user_id> route handles user deletion, also using the POST method.
+10>The delete_user() function:
+	->Accepts the user ID from the URL.
+	->Executes a DELETE query to remove the record from the database.
+	->Commits the change and redirects to the home page.
